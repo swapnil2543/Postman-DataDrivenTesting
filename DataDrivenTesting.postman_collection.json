@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "495f6971-79e5-4616-b6b9-d2fb9a63b55d",
+		"name": "DataDrivenTesting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23925989"
+	},
+	"item": [
+		{
+			"name": "PostReq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check status code\", function(){\r",
+							"pm.response.to.have.status(201);\r",
+							"\r",
+							"\r",
+							"}\r",
+							"\r",
+							")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{req}}api/page=2",
+					"host": [
+						"{{req}}api"
+					],
+					"path": [
+						"page=2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TestCase1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"this is pre-request for testcase1: \");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"this tests for testcase\",pm.info.requestName);\r",
+							"tests[\"check for status code\"]= responseCode.code==200;\r",
+							"tests[\"String match\"]= responseBody.has(\"Michael\");\r",
+							"var jsonRes = JSON.parse(responseBody);\r",
+							"tests[\"check for id of Lindsay\"]=jsonRes.data[1].id==8;\r",
+							"tests[\"check Micheal's last name as Lawson\"]= jsonRes.data[0].last_name = \"Lawson\";\r",
+							"pm.environment.set(\"var1\", \"value1\");\r",
+							"console.log(pm.environment.get(\"SIT_ENV\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"uuid": "986f8063-ef8f-4029-965e-c8ad2a1424d7"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"uuid": "e7385487-54c4-4d0f-b26a-a174cbc4acc5"
+					}
+				],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
